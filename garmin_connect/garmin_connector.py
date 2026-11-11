@@ -49,11 +49,9 @@ def get_user_current_condition(garmin, date):
     week_start = _shift_date(date, 6)    # 7 days including today
     month_start = _shift_date(date, 29)  # 30 days including today
 
-    # --- Daily summary for today: stress, HR min/max, body battery ---
+    # --- Daily summary for today: stress so far, body battery (and resting HR fallback) ---
     summary = _safe_call(garmin.get_user_summary, date) or {}
-    stress_level_today = summary.get("averageStressLevel")
-    heart_rate_min_daily = summary.get("minHeartRate")
-    heart_rate_max_daily = summary.get("maxHeartRate")
+    stress_level_today = summary.get("averageStressLevel")  # partial day if run before evening
     body_battery = summary.get("bodyBatteryMostRecentValue")
 
     # --- Stress averages over the past week / month (one call covers both) ---
@@ -170,8 +168,6 @@ def get_user_current_condition(garmin, date):
         "stress_level_last_week": stress_level_last_week,
         "stress_level_last_month": stress_level_last_month,
         "body_battery": body_battery,
-        "heart_rate_min_daily": heart_rate_min_daily,
-        "heart_rate_max_daily": heart_rate_max_daily,
         "resting_hr_today": resting_hr_today,
         "resting_hr_7d_avg": resting_hr_7d_avg,
         "resting_hr_vs_baseline": resting_hr_vs_baseline,
