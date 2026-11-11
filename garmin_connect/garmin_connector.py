@@ -4,6 +4,12 @@ import getpass
 import json
 from datetime import datetime, timedelta
 
+
+def save_snapshot_to_file(snapshot, filename):
+    with open(filename, 'w') as f:
+        json.dump(snapshot, f, indent=2)
+    return
+
 def build_workout(garmin): 
     # TODO: Implement the logic to build a workout based on the user's current condition and historical data
     raise NotImplementedError
