@@ -4,6 +4,10 @@ import getpass
 import json
 from datetime import datetime, timedelta
 
+def build_workout(garmin): 
+    # TODO: Implement the logic to build a workout based on the user's current condition and historical data
+    raise NotImplementedError
+
 def connect_to_garmin(email, password):
     garmin = Garmin(email, password)
     try:
